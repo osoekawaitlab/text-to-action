@@ -65,7 +65,7 @@ filterwarnings = [
     "error",
 ]
 markers = [
-    "slow: marks tests as slow"
+    "e2e: marks tests as e2e"
 ]
 
 [tool.black]
@@ -104,20 +104,20 @@ deps =
 commands =
     black src/ tests
     isort src/ tests
-    pytest -m "not slow"
+    pytest -m "not e2e"
     pflake8 src/ tests/ stubs/
     mypy src/olt2f --strict --show-traceback
     mypy tests --strict
 
-[testenv:fulltest]
+[testenv:e2e]
 setenv =
-    VIRTUALENV_PIP = 24.1
+    VIRTUALENV_PIP = 24.2
 deps =
     -e .[dev]
 commands =
     black src/ tests
     isort src/ tests
-    pytest
+    pytest -m "e2e"
     pflake8 src/ tests/ stubs/
     mypy src/olt2f --strict --show-traceback
     mypy tests --strict
