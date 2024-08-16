@@ -18,11 +18,11 @@ class BaseTextToActionModelSettings(BaseSettings):
     type: TextToActionModelType
 
 
-class ActionGemma9BTextToActionModelSettings(BaseTextToActionModelSettings):
+class ActionGemma9bTextToActionModelSettings(BaseTextToActionModelSettings):
     type: Literal[TextToActionModelType.ACTION_GEMMA_9B] = TextToActionModelType.ACTION_GEMMA_9B
 
 
-TextToActionModelSettings = Annotated[ActionGemma9BTextToActionModelSettings, Field(discriminator="type")]
+TextToActionModelSettings = Annotated[ActionGemma9bTextToActionModelSettings, Field(discriminator="type")]
 
 
 class TextToActionCoreSettings(BaseSettings):
