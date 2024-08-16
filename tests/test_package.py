@@ -5,3 +5,7 @@ import olt2f
 
 def test_olt2f_has_version() -> None:
     assert re.match(r"\d+\.\d+\.\d+", olt2f.__version__)
+
+
+def test_olt2f_has_text_to_action_core_settings() -> None:
+    assert olt2f.TextToActionCoreSettings == olt2f.settings.TextToActionCoreSettings
