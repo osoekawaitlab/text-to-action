@@ -17,3 +17,6 @@ def test_olt2f_has_text_to_action_core() -> None:
 
 def test_olt2f_exports_some_models() -> None:
     assert olt2f.Query == olt2f.models.Query
+    assert olt2f.Action == olt2f.models.Action
+    assert olt2f.NoAction == olt2f.models.NoAction
+    assert olt2f.Tool == olt2f.models.Tool

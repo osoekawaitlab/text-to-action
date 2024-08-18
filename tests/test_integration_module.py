@@ -7,10 +7,10 @@ import olt2f
 def test_olt2f_text_to_action() -> None:
     settings = olt2f.TextToActionCoreSettings(text_to_action_model_settings={"type": "ActionGemma-9B"})
     core = olt2f.TextToActionCore.create(settings=settings)
-    query = olt2f.Qurey(
+    query = olt2f.Query(
         instruction="Turn on the light of my room",
-        actions=[
-            olt2f.Action(
+        tools=[
+            olt2f.Tool(
                 name="get_light_id_by_alias",
                 description="Get the light id by alias",
                 parameters={
@@ -25,7 +25,7 @@ def test_olt2f_text_to_action() -> None:
                     "additional_properties": False,
                 },
             ),
-            olt2f.Action(
+            olt2f.Tool(
                 name="turn_on_light",
                 description="Turn on the light",
                 parameters={
