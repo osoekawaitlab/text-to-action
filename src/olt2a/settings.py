@@ -7,7 +7,7 @@ from pydantic_settings import SettingsConfigDict
 
 
 class BaseSettings(OltlBaseSettings):
-    model_config = SettingsConfigDict(env_prefix="OLT2F_")
+    model_config = SettingsConfigDict(env_prefix="OLT2A_")
 
 
 class TextToActionModelType(str, Enum):

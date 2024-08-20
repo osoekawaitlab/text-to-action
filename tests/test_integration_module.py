@@ -1,16 +1,16 @@
 from pytest import mark
 
-import olt2f
+import olt2a
 
 
 @mark.e2e
-def test_olt2f_text_to_action() -> None:
-    settings = olt2f.TextToActionCoreSettings(text_to_action_model_settings={"type": "ActionGemma-9B"})
-    core = olt2f.TextToActionCore.create(settings=settings)
-    query = olt2f.Query(
+def test_olt2a_text_to_action() -> None:
+    settings = olt2a.TextToActionCoreSettings(text_to_action_model_settings={"type": "ActionGemma-9B"})
+    core = olt2a.TextToActionCore.create(settings=settings)
+    query = olt2a.Query(
         instruction="Turn on the light of my room",
         tools=[
-            olt2f.Tool(
+            olt2a.Tool(
                 name="get_light_id_by_alias",
                 description="Get the light id by alias",
                 parameters={
@@ -25,7 +25,7 @@ def test_olt2f_text_to_action() -> None:
                     "additional_properties": False,
                 },
             ),
-            olt2f.Tool(
+            olt2a.Tool(
                 name="turn_on_light",
                 description="Turn on the light",
                 parameters={
@@ -43,6 +43,6 @@ def test_olt2f_text_to_action() -> None:
         ],
     )
     action = core(query)
-    assert not isinstance(action, olt2f.NoAction)
+    assert not isinstance(action, olt2a.NoAction)
     assert action.name == "turn_on_light"
-    assert action.arguments == {"light_id": olt2f.Action(name="get_light_id_by_alias", arguments={"alias": "my room"})}
+    assert action.arguments == {"light_id": olt2a.Action(name="get_light_id_by_alias", arguments={"alias": "my room"})}

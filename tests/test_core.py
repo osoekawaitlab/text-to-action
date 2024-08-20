@@ -1,13 +1,13 @@
 from pytest_mock import MockerFixture
 
-from olt2f import core
-from olt2f.models import Query, Tool
-from olt2f.settings import TextToActionCoreSettings, TextToActionModelType
-from olt2f.text_to_action_models.base import BaseTextToActionModel
+from olt2a import core
+from olt2a.models import Query, Tool
+from olt2a.settings import TextToActionCoreSettings, TextToActionModelType
+from olt2a.text_to_action_models.base import BaseTextToActionModel
 
 
 def test_core_create(mocker: MockerFixture) -> None:
-    create_text_to_action_model = mocker.patch("olt2f.core.create_text_to_action_model")
+    create_text_to_action_model = mocker.patch("olt2a.core.create_text_to_action_model")
     settings = TextToActionCoreSettings(text_to_action_model_settings={"type": TextToActionModelType.ACTION_GEMMA_9B})
     actual = core.TextToActionCore.create(settings=settings)
     assert isinstance(actual, core.TextToActionCore)
