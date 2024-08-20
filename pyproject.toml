@@ -4,7 +4,7 @@ requires = ["flit_core >=3.8.0,<4"]
 
 
 [project]
-name = "olt2f"
+name = "olt2a"
 description = ""
 authors = [
     {name = "osoken"},
@@ -26,19 +26,20 @@ classifiers = [
 
 dependencies = [
     "oltl @ git+https://github.com/osoekawaitlab/ol-type-library",
+    "transformers",
 ]
 
 [project.urls]
 Source = "https://github.com/osoekawaitlab/text-to-action"
 
 [tool.setuptools]
-packages=["olt2f"]
+packages=["olt2a"]
 
 [tool.setuptools.package-data]
-olt2f = ["py.typed"]
+olt2a = ["py.typed"]
 
 [project.scripts]
-olt2f = "olt2f.main:main"
+olt2a = "olt2a.main:main"
 
 [project.optional-dependencies]
 dev=[
@@ -59,8 +60,8 @@ docs=[
 ]
 
 [tool.pytest.ini_options]
-addopts = ["-sv", "--random-order", "--doctest-modules", "--cov=olt2f", "--cov-report=xml", "--cov-report=term-missing"]
-testpaths = ["tests", "src/olt2f"]
+addopts = ["-sv", "--random-order", "--doctest-modules", "--cov=olt2a", "--cov-report=xml", "--cov-report=term-missing"]
+testpaths = ["tests", "src/olt2a"]
 filterwarnings = [
     "error",
 ]
@@ -106,7 +107,7 @@ commands =
     isort src/ tests
     pytest -m "not e2e"
     pflake8 src/ tests/ stubs/
-    mypy src/olt2f --strict --show-traceback
+    mypy src/olt2a --strict --show-traceback
     mypy tests --strict
 
 [testenv:e2e]
@@ -119,6 +120,6 @@ commands =
     isort src/ tests
     pytest -m "e2e"
     pflake8 src/ tests/ stubs/
-    mypy src/olt2f --strict --show-traceback
+    mypy src/olt2a --strict --show-traceback
     mypy tests --strict
 """
