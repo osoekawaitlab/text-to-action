@@ -1,16 +1,16 @@
 from pytest import mark
 
-import olt2a
+from olt2a.models import Query, Tool
+from olt2a.text_to_action_models.action_gemma_9b import ActionGemma9bTextToActionModel
 
 
-@mark.e2e
-def test_olt2a_text_to_action() -> None:
-    settings = olt2a.TextToActionCoreSettings(text_to_action_model_settings={"type": "ActionGemma-9B"})
-    core = olt2a.TextToActionCore.create(settings=settings)
-    query = olt2a.Query(
+@mark.slow
+def test_action_gemma_9b_call() -> None:
+    sut = ActionGemma9bTextToActionModel()
+    query = Query(
         instruction="Turn on the light of my room",
         tools=[
-            olt2a.Tool(
+            Tool(
                 name="turn_on_light_by_alias",
                 description="Turn on the light by alias",
                 parameters={
@@ -23,6 +23,6 @@ def test_olt2a_text_to_action() -> None:
             ),
         ],
     )
-    action = core(query)
-    assert action.name == "turn_on_light_by_alias"
-    assert action.arguments == {"alias": "my_room"}
+    actual = sut(query=query)
+    assert actual.name == "turn_on_light_by_alias"
+    assert actual.arguments == {"alias": "my_room"}

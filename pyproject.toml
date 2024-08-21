@@ -67,7 +67,8 @@ filterwarnings = [
     "error",
 ]
 markers = [
-    "e2e: marks tests as e2e"
+    "e2e: marks tests as e2e",
+    "slow: marks tests as slow",
 ]
 
 [tool.black]
@@ -99,6 +100,19 @@ skipsdist = true
 envlist = py310
 
 [testenv]
+setenv =
+    VIRTUALENV_PIP = 24.2
+deps =
+    -e .[dev]
+commands =
+    black src/ tests
+    isort src/ tests
+    pytest -m "not e2e and not slow"
+    pflake8 src/ tests/ stubs/
+    mypy src/olt2a --strict --show-traceback
+    mypy tests --strict
+
+[testenv:full]
 setenv =
     VIRTUALENV_PIP = 24.2
 deps =

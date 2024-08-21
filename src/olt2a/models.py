@@ -116,6 +116,7 @@ class ParameterType(str, Enum):
 class BaseParameter(BaseModel):
     type: ParameterType
     description: Optional[Description] = None
+    enum: Optional[List[str | int | float]] = None
 
 
 class ObjectParameter(BaseParameter):
@@ -135,7 +136,7 @@ Parameter = Annotated[Union[ObjectParameter, StringParameter], Field(discriminat
 class Tool(BaseModel):
     name: ToolName
     description: Description
-    parameters: Parameter
+    parameters: Dict[ParameterName, Parameter]
 
 
 class Query(BaseModel):

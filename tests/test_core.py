@@ -19,7 +19,8 @@ def test_core_call(mocker: MockerFixture) -> None:
     model = mocker.Mock(spec=BaseTextToActionModel)
     sut = core.TextToActionCore(model=model)
     query = Query(
-        instruction="instruction", tools=[Tool(name="name", description="description", parameters={"type": "string"})]
+        instruction="instruction",
+        tools=[Tool(name="name", description="description", parameters={"arg": {"type": "string"}})],
     )
     actual = sut(query=query)
     assert actual == model.return_value
