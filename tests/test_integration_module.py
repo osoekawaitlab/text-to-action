@@ -24,5 +24,6 @@ def test_olt2a_text_to_action() -> None:
         ],
     )
     action = core(query)
+    assert isinstance(action, olt2a.Action)
     assert action.name == "turn_on_light_by_alias"
     assert action.arguments == {"alias": "my_room"}
