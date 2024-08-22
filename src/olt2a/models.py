@@ -108,6 +108,10 @@ class Description(NonEmptyTrimmedString):
     r""" """
 
 
+class Comment(TrimmedStringMixIn):
+    pass
+
+
 class ParameterType(str, Enum):
     OBJECT = "object"
     STRING = "string"
@@ -155,6 +159,7 @@ class BaseAction(BaseModel):
 
 class NoAction(BaseAction):
     type: Literal[ActionType.NO_ACTION] = ActionType.NO_ACTION
+    comment: Optional[Comment] = None
 
 
 class Action(BaseAction):

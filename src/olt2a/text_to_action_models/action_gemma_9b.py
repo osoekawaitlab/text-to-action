@@ -10,7 +10,7 @@ from transformers import (
     PreTrainedTokenizerBase,
 )
 
-from ..models import Action, ActionResult, BaseModel, Query, Tool
+from ..models import Action, ActionResult, BaseModel, NoAction, Query, Tool
 from .base import BaseTextToActionModel
 
 
@@ -43,7 +43,20 @@ class ActionGemma9bTextToActionModel(BaseTextToActionModel):
 
     @staticmethod
     def _format_tools(tools: List[Tool]) -> List[Dict[str, JsonAcceptable]]:
-        return [ActionGemma9bTextToActionModel._format_tool(tool) for tool in tools]
+        return [ActionGemma9bTextToActionModel._format_tool(tool) for tool in tools] + [
+            ActionGemma9bTextToActionModel._format_tool(
+                Tool(
+                    name="no_action",
+                    description="Select this whenever all other tools seems to be wrong",
+                    parameters={
+                        "reason": {
+                            "type": "string",
+                            "description": "The reason why no other tools can be used",
+                        }
+                    },
+                )
+            )
+        ]
 
     @staticmethod
     def _format_tool(tool: Tool) -> Dict[str, JsonAcceptable]:
@@ -80,4 +93,6 @@ If the given question lacks the parameters required by the function, also point 
             action = ActionGemma9bResultModel.validate_json(result)
         except json.JSONDecodeError:
             raise ValueError(f"Failed to decode the result: {result}")
+        if action[0].name == "no_action":
+            return NoAction(comment=action[0].arguments["reason"])
         return Action(name=action[0].name, arguments=action[0].arguments)
