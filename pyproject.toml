@@ -55,6 +55,9 @@ dev=[
     "pytest-cov",
     "pytest-random-order",
 ]
+openai=[
+    "openai",
+]
 prod=[
 ]
 docs=[
@@ -69,6 +72,7 @@ filterwarnings = [
 markers = [
     "e2e: marks tests as e2e",
     "slow: marks tests as slow",
+    "openai_api_key_required: marks tests as openai_api_key_required",
 ]
 
 [tool.black]
@@ -107,7 +111,7 @@ deps =
 commands =
     black src/ tests
     isort src/ tests
-    pytest -m "not e2e and not slow"
+    pytest -m "not e2e and not slow and not openai_api_key_required"
     pflake8 src/ tests/ stubs/
     mypy src/olt2a --strict --show-traceback
     mypy tests --strict
@@ -116,7 +120,7 @@ commands =
 setenv =
     VIRTUALENV_PIP = 24.2
 deps =
-    -e .[dev]
+    -e .[dev,openai]
 commands =
     black src/ tests
     isort src/ tests
