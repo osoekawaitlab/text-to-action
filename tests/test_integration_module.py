@@ -51,3 +51,12 @@ def test_olt2a_text_to_action_returns_no_action() -> None:
     )
     action = core(query)
     assert isinstance(action, olt2a.NoAction)
+
+
+@mark.e2e
+def test_olt2a_text_to_action_with_empty_instruction() -> None:
+    settings = olt2a.TextToActionCoreSettings(text_to_action_model_settings={"type": "ActionGemma-9B"})
+    core = olt2a.TextToActionCore.create(settings=settings)
+    query = olt2a.Query(instruction="Do something.", tools=[])
+    action = core(query)
+    assert isinstance(action, olt2a.NoAction)
